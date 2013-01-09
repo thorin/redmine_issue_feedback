@@ -9,10 +9,11 @@ module IssueFeedback
     end
 
     def controller_issues_edit_before_save(context)
-      reset_issue_feedback(context[:issue])
+      reset_issue_feedback(context[:issue], context[:params])
     end
 
-    def reset_issue_feedback(issue, user = User.current)
+    def reset_issue_feedback(issue, params, user = User.current)
+      return if params[:skip_issue_feedback] == '1'
       return if issue.status.name != 'Feedback'
       return unless issue.attributes_before_change
       return if issue.attributes_before_change['status_id'] != issue.status.id
@@ -27,5 +28,8 @@ module IssueFeedback
       end
     end
   end
-
+  class ViewHooks < Redmine::Hook::ViewListener
+    render_on :view_issues_edit_notes_bottom, 
+      :partial => 'issues/feedback_status_change'
+  end
 end

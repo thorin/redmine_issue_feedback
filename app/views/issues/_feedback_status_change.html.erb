@@ -1,0 +1,7 @@
+<% if User.current.allowed_to?(:skip_automatic_status_update, @project) %>
+  <%= label_tag 'skip_issue_feedback' do -%>
+    <%= hidden_field_tag 'skip_issue_feedback', '0', :id => nil %>
+    <%= check_box_tag 'skip_issue_feedback' %>
+    <%= l(:label_feedback_skip_automatic_status_update) %>
+  <% end -%>
+<% end %>
