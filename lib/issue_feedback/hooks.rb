@@ -19,7 +19,6 @@ module IssueFeedback
       return if issue.attributes_before_change['status_id'] != issue.status.id
 
       tracker = Tracker.find_by_id(issue.tracker_id)
-      Rails.logger.error "Tracker statuse #{tracker.issue_statuses}"
       in_progress = tracker.issue_statuses.find { |s| s.name == 'In Progress' }
 
       if in_progress.present?
