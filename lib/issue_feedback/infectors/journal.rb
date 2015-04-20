@@ -1,8 +1,8 @@
 module IssueFeedback
   module Infectors
-    module Issue
+    module Journal
       module ClassMethods; end
-  
+
       module InstanceMethods
         attr_accessor :attributes_before_change
       end
@@ -14,7 +14,6 @@ module IssueFeedback
           unloadable
         end
       end
-
     end
   end
 end

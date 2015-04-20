@@ -15,8 +15,9 @@ module IssueFeedback
     def reset_issue_feedback(issue, params, user = User.current)
       return if params[:skip_automatic_status_update] == '1'
       return if issue.status.name != 'Feedback'
-      return unless issue.attributes_before_change
-      return if issue.attributes_before_change['status_id'] != issue.status.id
+      return unless issue.try(:current_journal).try(:attributes_before_change)
+      return if issue.current_journal.attributes_before_change['status_id'] != issue.status.id
+      return if issue.last_modifier_id == User.current.id
 
       tracker = Tracker.find_by_id(issue.tracker_id)
       in_progress = tracker.issue_statuses.find { |s| s.name == 'In Progress' }
@@ -28,7 +29,7 @@ module IssueFeedback
     end
   end
   class ViewHooks < Redmine::Hook::ViewListener
-    render_on :view_issues_edit_notes_bottom, 
+    render_on :view_issues_edit_notes_bottom,
       :partial => 'issues/skip_automatic_status_update'
   end
 end

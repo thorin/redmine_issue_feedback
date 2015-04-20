@@ -1,6 +1,6 @@
 module IssueFeedback
   module Infectors
-    Dir[File.join(File.dirname(__FILE__), "infectors", "*.rb")].each{|file| 
+    Dir[File.join(File.dirname(__FILE__), "infectors", "*.rb")].each{|file|
       require_dependency file;
       infected_name = File.basename(file, ".rb").classify
       Rails.logger.info "Infected #{infected_name} with #{file}"
