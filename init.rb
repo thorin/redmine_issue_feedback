@@ -1,6 +1,6 @@
 require 'redmine'
 
-Redmine::Plugin.register :issue_feedback do
+Redmine::Plugin.register :redmine_issue_feedback do
   name 'Redmine Issue Feedback'
   author 'Ricardo Santos'
   author_url 'https://github.com/thorin/'
